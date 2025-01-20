@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
-import { ActivatedRoute } from '@angular/router';
 import { VatAddedPipe } from "../../pipes/vat-added.pipe";
-import { FormsModule } from '@angular/forms';
 import { FilterPipePipe } from '../../pipes/filter-pipe.pipe';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product',
@@ -20,7 +22,7 @@ export class ProductComponent implements OnInit {
   dataLoaded = false;
   filterText = "";
   
-  constructor(private productService:ProductService, private activatedRoute:ActivatedRoute){
+  constructor(private productService:ProductService, private activatedRoute:ActivatedRoute, private toastrService:ToastrService){
     
   }
   ngOnInit(): void {
@@ -46,5 +48,9 @@ export class ProductComponent implements OnInit {
       this.products = response.data
       this.dataLoaded = true;
     })
+  }
+
+  addToCart(product:Product){
+    this.toastrService.success("Sepete eklendi",product.productName)
   }
 }
