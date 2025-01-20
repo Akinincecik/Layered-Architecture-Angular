@@ -3,11 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute } from '@angular/router';
+import { VatAddedPipe } from "../../pipes/vat-added.pipe";
+import { FormsModule } from '@angular/forms';
+import { FilterPipePipe } from '../../pipes/filter-pipe.pipe';
 
 @Component({
   selector: 'app-product',
   standalone:true,
-  imports: [CommonModule],
+  imports: [CommonModule, VatAddedPipe, FilterPipePipe, FormsModule],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
@@ -15,6 +18,7 @@ export class ProductComponent implements OnInit {
 
   products:Product[] = [];
   dataLoaded = false;
+  filterText = "";
   
   constructor(private productService:ProductService, private activatedRoute:ActivatedRoute){
     
